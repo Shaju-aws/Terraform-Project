@@ -51,5 +51,5 @@ data "aws_ssm_parameter" "frontend_sg_id" {
 }
 
 data "http" "my_public_ip" {
-url = "https://icanhazip.com"
+url = "https://ipv4.icanhazip.com"
 }
