@@ -1,0 +1,6 @@
+- name: enabling nodejs 20
+  command: dnf module enable nodejs:20 -y
+- name: installing nodejs
+  package:
+    name: nodejs
+    state: present

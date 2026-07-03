@@ -1,0 +1,77 @@
+- name: Configuring Catalogue server
+  hosts: catalogue
+  become: true
+  tasks:
+    - name: enabling nodejs 20
+      command: dnf module enable nodejs:20 -y
+    - name: installing nodejs
+      package:
+        name: nodejs
+        state: present
+    - name: creating application user
+      user:
+        name: roboshop
+        system: true
+        shell: /sbin/nologin
+    - name: creating application directory
+      file:
+        path: /app
+        state: directory
+    - name: downloading application content
+      get_url:
+        url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
+        dest: /tmp/catalogue-v3.zip
+    - name: unzipping application content
+      unarchive:
+        src: /tmp/catalogue-v3.zip
+        dest: /app
+        remote_src: true
+    - name: installing npm dependencies
+      npm:
+        path: /app
+    - name: copy catalogue.service to destination
+      template:
+        src: catalogue.service.j2
+        dest: /etc/systemd/system/catalogue.service
+    - name: daemon reloading
+      systemd:
+        daemon_reload: true
+    - name: starting and enabling catalogue
+      service:
+        name: catalogue
+        state: started
+        enabled: true 
+    - name: copy mongodb repo file to destination
+      copy:
+        src: mongo.repo
+        dest: /etc/yum.repos.d/mongo.repo
+    - name: installing mongodb client
+      package:
+        name: mongodb-mongosh
+        state: present
+    - name: check catalogue schema status
+      shell: mongosh --host "{{ MONGODB_HOST }}" --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+      register: catalogue_output
+      tags:
+        - mongodb
+    - name: debug catalogue schema status
+      debug:
+        msg: "{{ catalogue_output }}"
+      tags:
+        - mongodb
+    - name: load products
+      shell: mongosh --host "{{ MONGODB_HOST }}" </app/db/master-data.js
+      when: catalogue_output.stdout | int < 0
+      tags:
+      - mongodb
+    - name: deamon reload
+      systemd_service:
+        name: catalogue
+        daemon_reload: true
+    - name: enable and start catalogue
+      service:
+        name: catalogue
+        state: restarted
+        enabled: yes
+
+

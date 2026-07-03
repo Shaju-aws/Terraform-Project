@@ -1,0 +1,5 @@
+- name: enable and start shipping
+  service:
+    name: shipping
+    state: restarted
+    enabled: true

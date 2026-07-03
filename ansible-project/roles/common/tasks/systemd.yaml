@@ -1,0 +1,4 @@
+- name: daemon re-load
+  systemd_service:
+    name: cart
+    daemon-reload: true
