@@ -298,8 +298,12 @@ resource "aws_security_group_rule" "bastion" {
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  cidr_blocks = ["${chomp(data.http.my_public_ip.response_body)}/32"]
-  security_group_id = local.frontend_alb_sg_id
+#   cidr_blocks = ["${chomp(data.http.my_public_ip.response_body)}/32"]
+
+cidr_blocks = [
+    "${chomp(data.http.my_public_ip.response_body)}/32"
+  ]
+  security_group_id = local.bastion_sg_id
 }
 
  
