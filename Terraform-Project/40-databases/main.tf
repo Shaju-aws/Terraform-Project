@@ -1,4 +1,4 @@
-resource "aws_instance" "bamongodbstion" {
+resource "aws_instance" "mongodb" {
   ami                    = data.aws_ami.joindevops.id
   instance_type          = "t3.micro"
   vpc_security_group_ids = [local.database_sg_id]
