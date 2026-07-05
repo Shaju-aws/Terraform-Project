@@ -1,0 +1,7 @@
+# ansible-playbook roboshop.yaml -e "component=mongodb"
+- name: configure "{{ component }}" server
+  hosts: "{{ component }}"
+  become: yes
+  connection: local
+  roles:
+  - "{{ component }}"
