@@ -1,5 +1,4 @@
 - name: configuring mongodb
-  hosts: mongodb
   become: true
   tasks:
     - name: copying mongo.repo to destination
