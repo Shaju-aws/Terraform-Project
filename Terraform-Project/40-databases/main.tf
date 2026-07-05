@@ -2,7 +2,7 @@ resource "aws_instance" "mongodb" {
   ami                    = data.aws_ami.joindevops.id
   instance_type          = "t3.micro"
   vpc_security_group_ids = [local.database_sg_id]
-  subnet_id              = local.database_subnet_ids
+  subnet_id              = local.database_subnet_id
 
   tags = merge(
     {
@@ -17,7 +17,7 @@ resource "terraform_data" "bootstrap" {
 
     connection {
         type        = "ssh"
-        host        = "aws_instance.mongodb.private_ip"
+        host        = aws_instance.mongodb.private_ip
         user        = "ec2-user"
         password    = "DevOps321"
     }
