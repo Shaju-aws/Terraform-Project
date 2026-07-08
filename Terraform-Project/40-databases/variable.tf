@@ -13,3 +13,7 @@ variable "environment" {
 variable "domain_name" {
   default = "devopstech.shop"
 }
+
+variable "mysql_root_password" {
+  type = string
+}
