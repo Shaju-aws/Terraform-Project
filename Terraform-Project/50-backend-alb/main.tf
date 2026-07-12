@@ -2,7 +2,7 @@ resource "aws_lb" "backend-alb" {
   name               = "${local.common_name}-backend-alb"
   internal           = true
   load_balancer_type = "application"
-  security_groups    = [local.backend_sg_id]
+  security_groups    = [local.backend_alb_sg_id]
   subnets            = local.private_subnet_ids
 
 
