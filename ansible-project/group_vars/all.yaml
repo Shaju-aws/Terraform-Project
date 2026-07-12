@@ -2,8 +2,8 @@ MONGODB_HOST: mongodb.devopstech.shop
 REDIS_HOST: redis.devopstech.shop
 MYSQL_HOST: mysql.devopstech.shop
 RABBITMQ_HOST: rabbitmq.devopstech.shop
-CATALOGUE_HOST: catalogue.devopstech.shop
-CART_HOST: cart.devopstech.shop
-USER_HOST: user.devopstech.shop
-SHIPPING_HOST: shipping.devopstech.shop
-PAYMENT_HOST: payment.devopstech.shop
+CATALOGUE_HOST: catalogue.backend-alb.devopstech.shop
+CART_HOST: cart.backend-alb.devopstech.shop
+USER_HOST: user.backend-alb.devopstech.shop
+SHIPPING_HOST: shipping.backend-alb.devopstech.shop
+PAYMENT_HOST: payment.backend-alb.devopstech.shop
